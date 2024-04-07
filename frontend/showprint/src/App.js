@@ -17,6 +17,7 @@ const App = () => {
       const thumbMark = await getFingerprint()
       setHash(thumbMark)
       setFingerprint(fData)
+      console.log(fData)
     }
     setLoading(false)
     setShowContent(!showContent)
