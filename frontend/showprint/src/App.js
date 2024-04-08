@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Button from '@mui/material/Button'
 import { getFingerprint, getFingerprintData } from '@thumbmarkjs/thumbmarkjs'
 import { TailSpin } from 'react-loader-spinner'
+import FingerPrintComponent from './components/FingerPrintComponent'
 
 const App = () => {
   const [showContent, setShowContent] = useState(false)
@@ -52,9 +53,17 @@ const App = () => {
           ) : (
             <div>
               <div>{`Hash: ${hash}`}</div>
-              {Object.entries(fingerprint).map(([key, value], idx) => (
-                <li key={idx}>{`${key}:\t${value}`}</li>
-              ))}
+              <div>
+                {Object.entries(fingerprint).map(([key, value], idx) => (
+                  <FingerPrintComponent
+                    key={key}
+                    componentKey={key}
+                    componentValue={value}
+                    visible={true}
+                  />
+                  // <li key={idx}>{`${key}:\t${value}`}</li>
+                ))}
+              </div>
             </div>
           )}
         </div>
