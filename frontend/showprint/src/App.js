@@ -4,12 +4,14 @@ import { getFingerprint, getFingerprintData } from '@thumbmarkjs/thumbmarkjs'
 import { TailSpin } from 'react-loader-spinner'
 import FingerPrintComponent from './components/FingerPrintComponent'
 import PrintContentButton from './components/PrintContentButton'
+import axios from 'axios'
 
 const App = () => {
   const [showContent, setShowContent] = useState(false)
   const [fingerprint, setFingerprint] = useState(false)
   const [hash, setHash] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [saved, setSaved] = useState(false)
 
   const toggleContent = async () => {
     if (!fingerprint) {
@@ -26,7 +28,14 @@ const App = () => {
   }
 
   const handleButtonClick = () => {
-    alert('Button clicked!')
+    if (fingerprint) {
+      axios
+        .post('http://localhost:3001/log/print', fingerprint)
+        .then((response) => {
+          setSaved(true)
+        })
+        .catch(alert('FAILED TO SAVE'))
+    }
   }
 
   return (
@@ -35,9 +44,19 @@ const App = () => {
         <Button variant="contained" onClick={toggleContent} style={{ marginRight: '10px' }}>
           {showContent ? 'Hide fingerprint' : 'Show fingerprint'}
         </Button>
-        <Button variant="contained" onClick={handleButtonClick}>
-          Save fingerprint to the server
-        </Button>
+        {fingerprint ? (
+          <Button
+            variant="contained"
+            onClick={handleButtonClick}
+            color={saved ? 'success' : 'primary'}
+          >
+            Save fingerprint to the server
+          </Button>
+        ) : (
+          <Button variant="contained" disabled>
+            Save fingerprint to the server
+          </Button>
+        )}
       </div>
 
       {showContent && (
