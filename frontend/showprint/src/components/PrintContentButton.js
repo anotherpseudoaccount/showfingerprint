@@ -11,12 +11,14 @@ const PrintContentButton = ({ content }) => {
   return (
     <div style={{ margin: '20px' }}>
       <Button variant="contained" onClick={toggleContent} fullWidth>
-        {isOpen ? 'Hide Content' : 'Show Content'}
+        {isOpen ? 'Hide Fingerprint Data' : 'Show Fingerprint Data'}
       </Button>
 
       {isOpen && (
         <Paper style={{ marginTop: '10px', padding: '10px' }}>
-          <Typography variant="body1">{renderContent(content)}</Typography>
+          <Typography component={'span'} variant="body1">
+            {renderContent(content)}
+          </Typography>
         </Paper>
       )}
     </div>

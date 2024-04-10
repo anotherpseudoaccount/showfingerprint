@@ -28,13 +28,15 @@ const App = () => {
   }
 
   const handleButtonClick = () => {
+    console.log(fingerprint)
     if (fingerprint) {
       axios
-        .post('http://localhost:3001/log/print', fingerprint)
+        .post('http://localhost:3001/log/print', { hash, ...fingerprint })
         .then((response) => {
+          console.log(response.status)
           setSaved(true)
         })
-        .catch(alert('FAILED TO SAVE'))
+        .catch((error) => alert('FAILED TO SAVE'))
     }
   }
 
@@ -50,7 +52,7 @@ const App = () => {
             onClick={handleButtonClick}
             color={saved ? 'success' : 'primary'}
           >
-            Save fingerprint to the server
+            {saved ? 'Saved fingerprint to the server!' : 'Save fingerprint to the server'}
           </Button>
         ) : (
           <Button variant="contained" disabled>
